@@ -24,7 +24,7 @@ def stripe():
         charge = evt['data']['object']
         c = get_customer_email(charge['customer'])
         desc = get_transaction_desc(charge)
-        amt = '$' + str(charge['amount'] / 100)
+        amt = '$' + str(charge['amount'] / 100.)
         return msg_hipchat('Not that I care, but ' \
                 + c + ' just paid us ' + amt + ' for a ' + desc + \
                 ' ' + __buildLink(evt['id']) + '.')
