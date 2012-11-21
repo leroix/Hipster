@@ -45,7 +45,9 @@ def stripe():
     }
 
     evt = request.json
-    resp = notify[evt['type']](evt)
+    if evt['type'] in notify.keys():
+        resp = notify[evt['type']](evt)
+
     return jsonify(result='merp')
 
 
