@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request
 from utils import get_customer_email, get_transaction_desc, msg_hipchat
 
 
-CONF = json.loads(open('.env').read())
+CONF = json.loads(open('.env').read()) if os.path.exists('.env') else os.environ
 app = Flask(__name__)
 
 

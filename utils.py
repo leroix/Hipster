@@ -1,9 +1,9 @@
-import json
+import os, json
 
 import requests as req
 import stripe
 
-CONF = json.loads(open('.env').read())
+CONF = json.loads(open('.env').read()) if os.path.exists('.env') else os.environ
 stripe.api_key = CONF['STRIPE_SECRET']
 
 def get_transaction_desc(charge):
