@@ -51,5 +51,5 @@ def stripe():
 
 
 if __name__ == '__main__':
-    port = int(CONF.get("PORT_WWW", 5000))
+    port = int(CONF.get("PORT", 5000))
     app.run(debug=CONF.get("DEBUG", False), host='0.0.0.0', port=port)
