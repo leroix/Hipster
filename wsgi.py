@@ -25,18 +25,17 @@ def stripe():
         c = get_customer_email(charge['customer'])
         desc = get_transaction_desc(charge)
         amt = '$' + str(charge['amount'] / 100.)
-        return msg_hipchat('Not that I care, but ' \
+        return msg_hipchat('Rafflecopter is getting too mainstream. ' \
                 + c + ' just paid us ' + amt + ' for a ' + desc + \
-                ' ' + __buildLink(evt['id']) + '.')
+                '  ' + __buildLink(evt['id']) + '   ***CHARGE SUCCEEDED***')
 
     def __charge_failed(evt):
         charge = evt['data']['object']
         c = get_customer_email(charge['customer'])
-        desc = get_transaction_desc(charge)
+        amt = '$' + str(charge['amount'] / 100.)
         return msg_hipchat('Putting down my vinyl records to come tell you ' + \
                 'compadres that ' + c + ' failed to pay us ' + \
-                'for a ' + desc + '  ' + \
-                __buildLink(evt['id']) + '.')
+                amt + '  ' + __buildLink(evt['id']) + '   ***CHARGE FAILED***')
 
 
     notify = {
