@@ -17,35 +17,15 @@ def index():
 
 @app.route('/stripe/', methods=['POST'])
 def stripe():
-    def __buildLink(evt_id):
-        return 'https://manage.stripe.com/#events/' + evt_id
-
-    def __charge_succeeded(evt):
+    def __build_send_msg(evt):
         charge = evt['data']['object']
         c = get_customer_email(charge['customer'])
         desc = get_transaction_desc(charge)
-        amt = '$' + str(charge['amount'] / 100.)
-        return msg_hipchat('Rafflecopter is getting too mainstream. ' \
-                + c + ' just paid us ' + amt + ' for a ' + desc + \
-                '  ' + __buildLink(evt['id']) + '   ***CHARGE SUCCEEDED***')
-
-    def __charge_failed(evt):
-        charge = evt['data']['object']
-        c = get_customer_email(charge['customer'])
-        amt = '$' + str(charge['amount'] / 100.)
-        return msg_hipchat('Putting down my vinyl records to come tell you ' + \
-                'compadres that ' + c + ' failed to pay us ' + \
-                amt + '  ' + __buildLink(evt['id']) + '   ***CHARGE FAILED***')
-
-
-    notify = {
-        'charge.succeeded':     __charge_succeeded,
-        'charge.failed':        __charge_failed
-    }
+        return msg_hipchat(c + ' -- ' + desc + ' -- ' + '**' + evt['type'] + '**')
 
     evt = request.json
-    if evt['type'] in notify.keys():
-        resp = notify[evt['type']](evt)
+    if evt['type'] in ['charge.succeeded', 'charge.failed']:
+        resp = __build_send_msg(evt)
 
     return jsonify(result='merp')
 

@@ -10,7 +10,7 @@ def get_transaction_desc(charge):
     if charge['invoice']:
         inv = stripe.Invoice.retrieve(charge['invoice'])
         plan = inv['lines']['subscriptions'][0]['plan']['name']
-        return '1 month (' + plan + ') subscription'
+        return plan
     else:
         return charge['description']
 
