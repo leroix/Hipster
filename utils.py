@@ -25,7 +25,7 @@ def msg_hipchat(msg):
 
     payload = {
         'room_id':    int(CONF['HIPCHAT_ROOM']),
-        'from':       'Hipster',
+        'from':       'Stripe',
         'message':    msg
     }
 
