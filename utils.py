@@ -21,8 +21,15 @@ def get_transaction_desc(charge):
     else:
         return ''
 
-def get_customer_email(cid):
-    return stripe.Customer.retrieve(cid)['email']
+def get_customer_email_plan(cid):
+    c = stripe.Customer.retrieve(cid)
+
+    em = c['email']
+
+    subs = c.get('subscription')
+    plan = (subs and subs['plan']['name']) or 'freeloader'
+
+    return (em, plan)
 
 def msg_hipchat(msg):
     params = {

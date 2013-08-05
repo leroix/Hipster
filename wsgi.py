@@ -3,7 +3,9 @@ import os, json
 import requests as req
 from flask import Flask, jsonify, request
 
-from utils import get_customer_email, get_transaction_desc, msg_hipchat
+from utils import (get_customer_email_plan, 
+                   get_transaction_desc, 
+                   msg_hipchat)
 
 
 CONF = json.loads(open('.env').read()) if os.path.exists('.env') else os.environ
@@ -19,9 +21,10 @@ def index():
 def stripe():
     def __build_send_msg(evt):
         charge = evt['data']['object']
-        c = get_customer_email(charge['customer'])
-        desc = get_transaction_desc(charge)
-        return msg_hipchat(c + ' -- ' + desc + ' -- ' + '**' + evt['type'] + '**')
+
+        email, plan = get_customer_email_plan(charge['customer'])
+
+        return msg_hipchat(email + ' -- ' + plan + ' -- ' + '**' + evt['type'] + '**')
 
     evt = request.json
     if evt['type'] in ['charge.succeeded', 'charge.failed']:
