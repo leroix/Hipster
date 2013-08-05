@@ -9,10 +9,17 @@ stripe.api_key = CONF['STRIPE_SECRET']
 def get_transaction_desc(charge):
     if charge['invoice']:
         inv = stripe.Invoice.retrieve(charge['invoice'])
-        plan = inv['lines']['subscriptions'][0]['plan']['name']
+
+        if inv['lines']['subscriptions']:
+            plan = inv['lines']['subscriptions'][0]['plan']['name']
+        else:
+            plan = "[[no current subscription]]"
+
         return plan
-    else:
+    elif charge['description']:
         return charge['description']
+    else:
+        return ''
 
 def get_customer_email(cid):
     return stripe.Customer.retrieve(cid)['email']
