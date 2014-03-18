@@ -59,7 +59,7 @@ def get_customer_email_plan(cid):
 
     subs = c.get('subscription')
     plan = (subs and subs['plan']['name']) or 'freeloader'
-    month = delta2month(subs.get('created'))
+    month = delta2month(subs.get('start'))
 
     return (em, plan, month)
 
