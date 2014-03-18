@@ -17,7 +17,7 @@ def delta2month(ts):
                 , "fifth"
                 , "sixth"
                 , "seventh"
-                , "eigth"
+                , "eighth"
                 , "ninth"
                 , "tenth"
                 , "twelfth"
