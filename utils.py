@@ -26,11 +26,11 @@ def delta2month(ts):
                 , "fifteenth"
                 ]
 
-    now = calendar.timegm(datetime.datetime.utcnow().utctimetuple())
+    now = datetime.datetime.utcnow()
 
-    _30days = 60*60*24*30.0
+    ts_dt = datetime.datetime.fromtimestamp(ts)
 
-    months = int(max(now - ts, 0) / _30days)
+    months = max(now.month - ts_dt.month, 0)
 
     if months < len(table):
         return table[months] + " month"
