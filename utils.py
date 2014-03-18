@@ -30,7 +30,7 @@ def delta2month(ts):
 
     ts_dt = datetime.datetime.fromtimestamp(ts)
 
-    months = max(now.month - ts_dt.month, 0)
+    months = max(now.month - ts_dt.month + 12*(now.year - ts_dt.year), 0)
 
     if months < len(table):
         return table[months] + " month"
