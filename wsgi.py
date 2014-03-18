@@ -22,9 +22,12 @@ def stripe():
     def __build_send_msg(evt):
         charge = evt['data']['object']
 
-        email, plan = get_customer_email_plan(charge['customer'])
+        email, plan, month = get_customer_email_plan(charge['customer'])
 
-        return msg_hipchat(email + ' -- ' + plan + ' -- ' + '**' + evt['type'] + '**')
+        return msg_hipchat( email + ' -- ' + \
+                            plan + ' -- ' + \
+                            month + ' -- ' + \
+                            '**' + evt['type'] + '**')
 
     evt = request.json
     if evt['type'] in ['charge.succeeded', 'charge.failed']:
